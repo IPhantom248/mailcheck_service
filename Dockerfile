@@ -1,8 +1,7 @@
-FROM python:3.8
+FROM python:3.8-slim
 
 # Достаточно изменить переменную для смены папок сборки и тд
-ARG APP_NAME=helpdesk
-
+ARG APP_NAME=mailcheck_service
 
 WORKDIR /usr/src/$APP_NAME
 
