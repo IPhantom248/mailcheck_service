@@ -9,27 +9,10 @@ services:
       - ./redis-data:/data
     ports:
       - "6379:6379"
-  app:
+  mailcheck_service:
     build: .
-    container_name: app
+    container_name: mailcheck_service
     command: uvicorn main.asgi:app --proxy-headers --host 0.0.0.0 --port 8002
     ports:
       - "8002:8002"
-    image: app-image
-
-  celery_worker:
-    image: app-image
-    command: celery -A main worker --loglevel=INFO
-    container_name: celery_worker
-    depends_on:
-      - app
-      - redis
-
-  celery_beat:
-    command: celery -A main beat --loglevel=INFO
-    container_name: celery_beat
-    depends_on:
-      - app
-      - redis
-    hostname: celery_beat
     image: app-image

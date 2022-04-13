@@ -18,3 +18,5 @@ RUN pip install -r requirements.txt
 COPY . /usr/src/$APP_NAME/
 
 RUN mkdir -p /usr/src/$APP_NAME
+
+ENTRYPOINT ["/usr/src/mailcheck_service/entrypoint.sh"]

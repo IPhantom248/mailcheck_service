@@ -1,5 +1,8 @@
 import aioredis
+from decouple import config
 from fastapi import APIRouter
+
+BROKER_URL = config("BROKER_URL", default="redis://localhost:6379")
 
 router = APIRouter(
     prefix="/api/v1",
@@ -10,7 +13,7 @@ router = APIRouter(
 
 @router.get("/check_mail/")
 async def check_mail(email: str):
-    redis = await aioredis.from_url("redis://redis:6379/0")
+    redis = await aioredis.from_url(BROKER_URL)
     domain = email.split("@")[1]
 
     if await redis.sismember("disposable_domains", domain):
